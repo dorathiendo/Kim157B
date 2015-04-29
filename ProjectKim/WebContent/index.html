@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Project</title>
+</head>
+<body>
+	<h1>OLAP Operations</h1>
+	<form action="api/hello" method="post">
+		Dimension1
+		<br>
+			<select name="attribute">
+			<option value="att1">Attr1</option>
+			<option value="att2">Attr2</option>
+			</select>
+		<br>
+		<input type="radio" name="operation" value="rollup" checked>Roll-Up
+		<br>
+		<input type="radio" name="operation" value="drilldown">Drill-down
+		<br>
+		<input type="radio" name="operation" value="slice">Slice
+		<br>
+		<input type="radio" name="operation" value="dice">Dice
+		<br>
+		<input type="submit" value="Submit">
+	</form>
+</body>
+</html>
