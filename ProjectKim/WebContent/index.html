@@ -2,19 +2,24 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Project</title>
+<title>Textbook Rental</title>
 </head>
 <body>
 	<h1>OLAP Operations</h1>
-	<form action="api/hello" method="post">
-		Dimension1
+	<form action="api/output" method="post">
+		Last Edited: 4/28 - Dora <br>
+		Rental Dimension
 		<br>
 			<select name="attribute">
-			<option value="att1">Attr1</option>
-			<option value="att2">Attr2</option>
+				<option value="return_date">Return Date</option>
+				<option value="month">Month</option>
+				<option value="year">Year</option>
+				<option value="return_status">Return Status</option>
 			</select>
 		<br>
-		<input type="radio" name="operation" value="rollup" checked>Roll-Up
+		<input type="radio" name="operation" value="base" checked>Base Cube
+		<br>
+		<input type="radio" name="operation" value="rollup">Roll-Up
 		<br>
 		<input type="radio" name="operation" value="drilldown">Drill-down
 		<br>

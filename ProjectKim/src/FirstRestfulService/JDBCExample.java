@@ -3,27 +3,35 @@ import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.mysql.jdbc.*;
  
 public class JDBCExample {
 	
-	private static String alluserids = "";
-	Connection connection = null;
+	//all queries:
+	String selectAllNames = 
+			"SELECT userdimension.name, textbookrentalfact.total "
+			+ "from userdimension, textbookrentalfact "
+			+ "where userdimension.id = textbookrentalfact.user_key";
+	
+	private static ArrayList<String> alluserids = new ArrayList<String>();
+	private static ArrayList<String> alltotals = new ArrayList<String>();
+	private Connection connection = null;
  
 	public JDBCExample() {
 		try {
 			connection = DriverManager.getConnection(
 					"jdbc:mysql://localhost:3306/textbookrental", "ddo",
 					"dustindo");
-			
-			String selectTableSQL = "SELECT user_key from textbookrentalfact";
 			Statement statement = (Statement) connection.createStatement();
-			ResultSet rs = statement.executeQuery(selectTableSQL);
+			
+			ResultSet rs = statement.executeQuery(selectAllNames);
 			while (rs.next()) {
-				String userid = rs.getString("user_key");
-				System.out.println(userid);
-				alluserids += userid + "\n";
+				String username = rs.getString("name");
+				String total = rs.getString("total");
+				alltotals.add(total);
+				alluserids.add(username);
 			}
 			
 		} catch (SQLException e) {
@@ -33,7 +41,11 @@ public class JDBCExample {
 		}
 	}
   
-	public String getUserIds() {
+	public ArrayList<String> getUserIds() {
 		return alluserids;
 	}
+	public ArrayList<String> getTotals() {
+		return alltotals;
+	}
+	
 }
