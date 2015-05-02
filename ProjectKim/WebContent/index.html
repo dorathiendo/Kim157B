@@ -2,31 +2,46 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Textbook Rental</title>
+<title>Grocery Store</title>
 </head>
 <body>
-	<h1>OLAP Operations</h1>
+	<h1>Base Cube</h1>
+	Choose what your base cube will look like.
 	<form action="api/output" method="post">
-		Last Edited: 4/28 - Dora <br>
-		Rental Dimension
-		<br>
-			<select name="attribute">
-				<option value="return_date">Return Date</option>
-				<option value="month">Month</option>
+		<input type="checkbox" name="time_dimension" value="time" checked>Time
+		<br>&nbsp; 
+			<select name="time_attribute">
+				<option value="date">Date</option>
+				<option value="day_of_week">Day of Week</option>
+				<option value="day_number_in_month">Day number in Month</option>
+				<option value="quarter">Quarter</option>
 				<option value="year">Year</option>
-				<option value="return_status">Return Status</option>
 			</select>
 		<br>
-		<input type="radio" name="operation" value="base" checked>Base Cube
+		<input type="checkbox" name="store_dimension" value="store" checked>Store
+		<br>&nbsp; 
+			<select name="store_attribute">
+				<option value="city">City</option>
+				<option value="store_county">County</option>
+				<option value="store_state">State</option>
+				<option value="sales_region">Region</option>
+			</select>
 		<br>
-		<input type="radio" name="operation" value="rollup">Roll-Up
+		<input type="checkbox" name="product_dimension" value="product" checked>Product
+		<br>&nbsp; 
+			<select name="product_attribute">
+				<option value="brand">Brand</option>
+				<option value="subcategory">Subcategory</option>
+				<option value="category">Category</option>
+				<option value="department">Department</option>
+			</select>
 		<br>
-		<input type="radio" name="operation" value="drilldown">Drill-down
-		<br>
-		<input type="radio" name="operation" value="slice">Slice
-		<br>
-		<input type="radio" name="operation" value="dice">Dice
-		<br>
+		<!-- Facts:
+		<input type="checkbox" name="facts" value="dollar_sales" checked>Dollar sales
+		<input type="checkbox" name="facts" value="unit_sales" checked>Unit sales
+		<input type="checkbox" name="facts" value="dollar_cost" checked>Dollar cost
+		<input type="checkbox" name="facts" value="customer_count" checked>Customer count
+		<br> -->
 		<input type="submit" value="Submit">
 	</form>
 </body>
