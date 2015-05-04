@@ -2,16 +2,38 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="grocerystyle.css">
 <title>Grocery Store</title>
 </head>
 <body>
+	<script type="text/javascript">
+		function showResults(){
+			var timeDim = document.getElementById('time_attribute');
+			var timeAttr = timeDim.options[timeDim.selectedIndex].value;
+			var storeDim = document.getELementById('store_attribute');
+			var storeAttr= storeDim.options[storeDim.selectedIndex].value;
+			var productDim = document.getELementById('product_attribute');
+			var productAttr= productDim.options[productDim.selectedIndex].value;
+			
+			var table = '<table><tr>';
+			table += '<th>' + timeAttr + '</th>';
+			table += '<th>' + storeAttr + '</th>';
+			table += '<th>' + productAttr + '</th>';
+			table += '</tr></table>';
+			
+			document.getElementById('results').innerHTML = table;
+			//document.write("siehge");
+		}
+	</script>
+	
+	<div id="form" >
 	<h1>Base Cube</h1>
 	Choose what your base cube will look like.
-	<form action="api/output" method="post">
+	<form onclick='showResults();' method="post">
 		<input type="checkbox" name="time_dimension" value="time" checked>Time
 		<br>&nbsp; 
-			<select name="time_attribute">
-				<!-- <option value="date">Date</option> -->
+			<select id="time_attribute">
+				<option value="date">Date</option>
 				<option value="day_of_week">Day of Week</option>
 				<option value="day_number_in_month">Day number in Month</option>
 				<option value="quarter">Quarter</option>
@@ -20,7 +42,7 @@
 		<br>
 		<input type="checkbox" name="store_dimension" value="store" checked>Store
 		<br>&nbsp; 
-			<select name="store_attribute">
+			<select id="store_attribute">
 				<option value="city">City</option>
 				<option value="store_county">County</option>
 				<option value="store_state">State</option>
@@ -29,23 +51,19 @@
 		<br>
 		<input type="checkbox" name="product_dimension" value="product" checked>Product
 		<br>&nbsp; 
-			<select name="product_attribute">
+			<select id="product_attribute">
 				<option value="brand">Brand</option>
 				<option value="subcategory">Subcategory</option>
 				<option value="category">Category</option>
 				<option value="department">Department</option>
 			</select>
 		<br>
-		<!-- Facts:
-		<input type="checkbox" name="facts" value="dollar_sales" checked>Dollar sales
-		<input type="checkbox" name="facts" value="unit_sales" checked>Unit sales
-		<input type="checkbox" name="facts" value="dollar_cost" checked>Dollar cost
-		<input type="checkbox" name="facts" value="customer_count" checked>Customer count
-		<br> -->
-		<input type="hidden" name="time_filter" value="">
-		<input type="hidden" name="store_filter" value="">
-		<input type="hidden" name="product_filter" value="">
-		<input type="submit" value="Submit">
+		<input type="submit" value="Submit" />
 	</form>
+	</div>
+	
+	<div id="results">
+	</div>
+	
 </body>
 </html>
