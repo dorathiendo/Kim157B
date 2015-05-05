@@ -8,7 +8,7 @@
 	<h1>Base Cube</h1>
 	Choose what your base cube will look like.
 	<form action="api/output" method="post">
-		<input type="checkbox" name="time_dimension" value="time" checked>Time
+		<input type="checkbox" name="dimension" value="time" checked>Time
 		<br>&nbsp; 
 			<select name="time_attribute">
 				<!-- <option value="date">Date</option> -->
@@ -18,7 +18,7 @@
 				<option value="year">Year</option>
 			</select>
 		<br>
-		<input type="checkbox" name="store_dimension" value="store" checked>Store
+		<input type="checkbox" name="dimension" value="store" checked>Store
 		<br>&nbsp; 
 			<select name="store_attribute">
 				<option value="city">City</option>
@@ -27,7 +27,7 @@
 				<option value="sales_region">Region</option>
 			</select>
 		<br>
-		<input type="checkbox" name="product_dimension" value="product" checked>Product
+		<input type="checkbox" name="dimension" value="product" checked>Product
 		<br>&nbsp; 
 			<select name="product_attribute">
 				<option value="brand">Brand</option>

@@ -29,6 +29,12 @@ public class JDBCExample {
 		attributes = new String[] {timeDim, storeDim, productDim};
 		sliceFilters = new String[] {timeFilter, storeFilter, productFilter};
 		
+		for(int i = 0; i < sliceFilters.length; i++){
+			if(sliceFilters[i] == null){
+				sliceFilters[i] = "";
+			}
+		}
+		
 		System.out.println("---------------");
 		System.out.println("time attribute: " + attributes[0]);
 		System.out.println("store attribute: " + attributes[1]);
@@ -43,28 +49,19 @@ public class JDBCExample {
 					"dustindo");
 			Statement statement = (Statement) connection.createStatement();
 			
-			String executeSQL = "";
-			if(sliceFilters[0].isEmpty() && sliceFilters[1].isEmpty() && sliceFilters[2].isEmpty()){
-				executeSQL = createBaseSQL();
-			} else {
-				for(int i = 0; i < sliceFilters.length; i++){
-					if(!sliceFilters[i].isEmpty()){
-						executeSQL = slice(tableNames[i], attributes[i], sliceFilters[i]);
-					}
-				}
-			}
+			String executeSQL = createSQL();
 			
 			ResultSet rs = statement.executeQuery(executeSQL);
 			while (rs.next()) {
 				String timeAtt = rs.getString(attributes[0]);
 				String storeAtt = rs.getString(attributes[1]);
 				String prodAtt = rs.getString(attributes[2]);
-				
+					
 				//facts
 				String ds = rs.getString("dollar_sales");
 				String us = rs.getString("unit_sales");
 				String dc = rs.getString("dollar_cost");
-				String cc = rs.getString("customer_count");
+				String cc = rs.getString("customer_count");			
 				
 				timeColumn.add(timeAtt);
 				storeColumn.add(storeAtt);
@@ -74,6 +71,14 @@ public class JDBCExample {
 				unitSalesCol.add(us);
 				dollarCostCol.add(dc);
 				customerCountCol.add(cc);
+				
+				/*System.out.print(timeAtt + " ");
+				System.out.print(storeAtt+ " ");
+				System.out.print(prodAtt+ " ");
+				System.out.print(ds+ " ");
+				System.out.print(us+ " ");
+				System.out.print(dc+ " ");
+				System.out.print(cc+ " \n");*/
 			}
 			
 			
@@ -88,45 +93,22 @@ public class JDBCExample {
 		timeColumn.removeAll(timeColumn);
 		storeColumn.removeAll(storeColumn);
 		productColumn.removeAll(productColumn);
+		dollarSalesCol.removeAll(dollarSalesCol);
+		unitSalesCol.removeAll(unitSalesCol);
+		dollarCostCol.removeAll(dollarCostCol);
+		customerCountCol.removeAll(customerCountCol);
 	}
-	
-	public String createBaseSQL(){
+	public String createSQL(){
 		String sql = "SELECT * FROM Sales_fact, store, time, product "
 				+ "WHERE sales_fact.store_key = store.store_key AND "
 				+ "sales_fact.time_key = time.time_key AND "
-				+ "sales_fact.product_key = product.product_key LIMIT 10";
-		return sql;
-	}
-	
-	public String slice(String dimension, String attribute, String value){
-		String sql = String.format("SELECT * FROM Sales_fact, store, time, product "
-				+ "WHERE sales_fact.store_key = store.store_key AND "
-				+ "sales_fact.time_key = time.time_key AND "
-				+ "sales_fact.product_key = product.product_key AND "
-				+ "%s.%s = \"%s\" LIMIT 10", dimension, attribute, value);
-		System.out.println(sql);
-		return sql;
-	}
-	
-	/**
-	 * not used yet
-	 * @param dimension1
-	 * @param attribute1
-	 * @param value1
-	 * @param dimension2
-	 * @param attribute2
-	 * @param value2
-	 * @return
-	 */
-	public String dice(String dimension1, String attribute1, String value1,
-					   String dimension2, String attribute2, String value2){
-		String sql = String.format("SELECT * FROM Sales_fact, store, time, product "
-				+ "WHERE sales_fact.store_key = store.store_key AND "
-				+ "sales_fact.time_key = time.time_key AND "
-				+ "sales_fact.product_key = product.product_key AND "
-				+ "%s.%s = \"%s\" AND %s.%s = \"%s\"" 
-				+ "LIMIT 10", dimension1, attribute1, value1, dimension2, attribute2, value2);
-		System.out.println(sql);
+				+ "sales_fact.product_key = product.product_key ";
+		for(int i = 0; i < 3; i++){
+			if(!sliceFilters[i].isEmpty()){
+				sql += String.format(" AND %s.%s = \"%s\" ", tableNames[i], attributes[i], sliceFilters[i]); 
+			}
+		}
+		sql += "LIMIT 100";
 		return sql;
 	}
 	
