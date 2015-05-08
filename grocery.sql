@@ -2,7 +2,8 @@
 SQLyog Community v12.08 (64 bit)
 MySQL - 5.6.23-log : Database - grocery
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
